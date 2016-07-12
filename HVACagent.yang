@@ -10,15 +10,17 @@ module HVACagent {
     
 	typedef Status {
 		type enumeration {
-			 enum Stopped;
-			 enum Running;
+			 enum Stop;
+			 enum Run;
 			 enum Error;
 		}
 	}
 	 
     grouping Temperature {
         leaf TempCentigrads {
-            type decimal64;
+            type decimal64 {
+                fraction-digits 1;
+            }
         }
     }
     
@@ -35,9 +37,15 @@ module HVACagent {
 	}
 	
 	grouping HVAC {
-		uses Temperature;
-		uses Heat;
-		uses AC;	
+	    container Temperature { 
+    		uses Temperature;
+        }
+		container Heat {
+		    uses Heat;
+		}
+		container Ac {
+		    uses Ac;	
+		}
 	}
 	
 	container HVAC {
